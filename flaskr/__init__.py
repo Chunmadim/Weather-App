@@ -1,21 +1,15 @@
 import requests
 from api_key import api_key
 import json
-from flask import Flask
-import os
+from flask import Flask, render_template
+import os#
+from weather_data import weather_data
 
 
 
-#r = requests.get(f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/London,UK/?key={api_key}")
+with open(r"C:\Users\akbar\Weather App\Weather-App\flaskr\sample.json", "r") as openfile:
+    json_object = json.load(openfile)
 
-#with open('sample.json', 'r') as openfile:
-
-#    json_object = json.load(openfile)
-
-#for key,value in json_object["days"][0].items():
-#    print(key)
-#    print(value)
-#    print()
 
 def create_app(test_config=None):
     app = Flask(__name__,instance_relative_config=True)
@@ -35,26 +29,15 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route("/today")
-    def today():
-        return "today's weather is good"
+    @app.route("/main")
+    def main():
+        data = weather_data()
+        return render_template("index.html", data=data)
+    
     
     return app
     
 
 create_app().run(debug=True)
 
-
-#r = requests.get(f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/London,UK/?key={api_key}")
-#print(r.json())
-
-#with open('sample.json', 'r') as openfile:
-#
-#    json_object = json.load(openfile)
-#
-#for key,value in json_object["days"][0].items():
-#    print(key)
-#    print(value)
-#    print()
-#
 
